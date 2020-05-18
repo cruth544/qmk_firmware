@@ -74,6 +74,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     {
 		/* Layer 1 with Gui + Ctrl */
 		case KC_LGUI:
+				key = ag_swap ? KC_LALT : KC_LGUI;
 				if (record->event.pressed)
 				{
 						if (ctrl_down)
@@ -83,29 +84,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						}
 						else
 						{
-								if (ag_swap)
-								{
-										register_code(KC_LALT);
-								}
-								else
-								{
-										register_code(KC_LGUI);
-								}
+								register_code(key);
 						}
 						gui_down = true;
 				}
 				else
 				{
 						/* Alt x Gui Swap */
-						if (ag_swap)
-						{
-								unregister_code(KC_LALT);
-						}
-						else
-						{
-								unregister_code(KC_LGUI);
-						}
-
+						unregister_code(key);
             layer_off(2);
 						gui_down = false;
 						if (ctrl_down)
@@ -145,29 +131,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         break;
 		/* End Layer 1 with Gui + Ctrl */
     case KC_LALT:
+				/* Alt x Gui Swap */
+				key = ag_swap ? KC_LGUI : KC_LALT;
         if (record->event.pressed)
         {
-						/* Alt x Gui Swap */
-						if (ag_swap)
-						{
-								register_code(KC_LGUI);
-						}
-						else
-						{
-								register_code(KC_LALT);
-						}
+						register_code(key);
         }
         else
         {
-						/* Alt x Gui Swap */
-						if (ag_swap)
-						{
-								unregister_code(KC_LGUI);
-						}
-						else
-						{
-								unregister_code(KC_LALT);
-						}
+						unregister_code(key);
         }
         return false;
         break;
