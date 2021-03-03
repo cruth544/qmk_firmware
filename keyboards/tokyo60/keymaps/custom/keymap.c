@@ -27,31 +27,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,--------------------------------------------------------------------------.
 	 * |PWR | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 |F10 |F11 |F12 |Togl|DEL |
 	 * |--------------------------------------------------------------------------|
-	 * |Caps  |    |Prev|Play|Next|    |    |    |    |    |BrUp| Up |BrDn|       |
+	 * |Caps  |    |Prev|Play|Next|    |    |    |    |    |PgUp| Up |PgDn|       |
 	 * |--------------------------------------------------------------------------|
-	 * |       |    |VolD|Mute|VolU|    |  * |  / |Home|PgUp|Left|Rght|   Enter   |
+	 * |       |    |VolD|Mute|VolU|    |  * |  / |BrUp|Home|Left|Rght|   Enter   |
 	 * |--------------------------------------------------------------------------|
-	 * |         |LTog|LMod|LMod|BTog|BStp|  + |  - | End|PgDn|Down|         |    |
+	 * |         |LTog|LMod|LMod|BTog|BStp|  + |  - |BrDn| End|Down|         |    |
 	 * `--------------------------------------------------------------------------'
 	 *       | Alt|   Gui  |             Space            |  Gui  |Alt |
 	 *       `---------------------------------------------------------'
 	 */
 	[1] = LAYOUT_60_hhkb(
 			KC_PWR  , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_INS , KC_DEL,
-			KC_CAPS  , KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BRID, KC_UP  , KC_BRIU,   KC_TRNS   ,
-			KC_TRNS   , KC_TRNS, KC_VOLD, KC_MUTE, KC_VOLU, KC_TRNS, KC_PAST, KC_PSLS, KC_HOME, KC_PGUP, KC_LEFT, KC_RGHT,   KC_PENT        ,
-			KC_TRNS    , RGB_TOG, RGB_MOD, RGB_RMOD, BL_TOGG, BL_STEP, KC_PPLS, KC_PMNS, KC_END , KC_PGDN, KC_DOWN,  KC_TRNS      , KC_TRNS ,
+			KC_CAPS  , KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGDN, KC_UP  , KC_PGUP,   KC_TRNS   ,
+			KC_TRNS   , KC_TRNS, KC_VOLD, KC_MUTE, KC_VOLU, KC_TRNS, KC_PAST, KC_PSLS, KC_BRIU, KC_HOME, KC_LEFT, KC_RGHT,   KC_PENT        ,
+			KC_TRNS    , RGB_TOG, RGB_MOD, RGB_RMOD, BL_TOGG, BL_STEP, KC_PPLS, KC_PMNS, KC_BRID , KC_END, KC_DOWN,  KC_TRNS      , KC_TRNS ,
 							 KC_TRNS , KC_TRNS     ,														KC_TRNS																	, KC_TRNS  , KC_TRNS
 	),
 	/* Layer 2: HHKB Function Layer
 	 * ,--------------------------------------------------------------------------.
-	 * |PWR | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 |F10 |F11 |F12 |Togl|DEL |
+	 * |PWR | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 |F10 |F11 |F12 |    |    |
 	 * |--------------------------------------------------------------------------|
-	 * |Caps  |    |Prev|Play|Next|    |    |    |    |    |BrUp| Up |BrDn|       |
+	 * |Tab   |    |    |    |    |    |    |    |    |    |    |    |    |       |
 	 * |--------------------------------------------------------------------------|
-	 * |       |    |VolD|Mute|VolU|    |  * |  / |Home|PgUp|Left|Rght|   Enter   |
+	 * |       |    |    |    |    |    |    |Rght|Down| Up |Left|    |   Enter   |
 	 * |--------------------------------------------------------------------------|
-	 * |         |LTog|LMod|LMod|BTog|BStp|  + |  - | End|PgDn|Down|         |    |
+	 * |         |    |    |    |    |    |    |    |    |    |    |         |    |
 	 * `--------------------------------------------------------------------------'
 	 *       | Alt|   Gui  |             Space            |  Gui  |Alt |
 	 *       `---------------------------------------------------------'
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_60_hhkb(
 			KC_PWR  , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_NO  , KC_NO ,
 			KC_TAB   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO     ,
-			KC_TRNS   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_NO  , KC_NO  ,   KC_PENT        ,
+			KC_TRNS   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_NO  , KC_NO  ,   KC_ENT         ,
 			KC_TRNS    , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   , KC_NO  , KC_NO  ,  KC_NO        , KC_TRNS ,
 							 KC_TRNS , KC_TRNS     ,														KC_TRNS																	, KC_TRNS  , KC_TRNS
 	)
