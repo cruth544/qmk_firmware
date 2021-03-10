@@ -3,8 +3,7 @@
 #define HHKB_FN MO(1)
 
 enum custom_keycodes {
-  DEL_W,
-  WIN_SWP
+  DEL_W
 };
 
 
@@ -43,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 *       `---------------------------------------------------------'
 	 */
 	[1] = LAYOUT_60_hhkb(
-			KC_PWR  , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , WIN_SWP, KC_DEL,
+			KC_PWR  , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_INS, KC_DEL,
 			KC_CAPS  , KC_TRNS, KC_MPRV, KC_MPLY, KC_MNXT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_UP  , KC_END ,   KC_TRNS   ,
 			KC_TRNS   , KC_TRNS, KC_VOLD, KC_MUTE, KC_VOLU, KC_TRNS, KC_PAST, KC_PSLS, KC_BRIU, KC_PGUP, KC_LEFT, KC_RGHT,   KC_PENT        ,
 			KC_TRNS    , RGB_TOG, RGB_MOD, RGB_RMOD, BL_TOGG, BL_STEP, KC_PPLS, KC_PMNS, KC_BRID , KC_PGDN, KC_DOWN,  KC_TRNS      , KC_TRNS ,
@@ -65,8 +64,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_60_hhkb(
 			KC_PWR  , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_NO  , KC_NO ,
 			KC_TAB   , KC_NO  , DEL_W  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,   KC_NO     ,
-			KC_TRNS   , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_NO  , KC_NO  ,   KC_ENT         ,
-			KC_TRNS    , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   , KC_NO  , KC_NO  ,  KC_NO        , MO(0) ,
+			KC_TRNS   , KC_NO  , KC_NO  , KC_DEL , KC_NO  , KC_NO  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_NO  , KC_NO  ,   KC_ENT         ,
+			KC_TRNS    , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   , KC_NO  , KC_NO  ,  KC_NO        , KC_TRNS ,
 							 KC_TRNS , KC_TRNS     ,														KC_TRNS																	, KC_TRNS  , KC_TRNS
 	)
 };
@@ -74,59 +73,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 static bool gui_down = false;
 static bool ctrl_down = false;
 static bool fn_down = false;
-/* static bool spc_down = false; */
+static bool spc_down = false;
 static bool win_swap = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-		uint16_t key      = keycode,
-						 gui_key  = win_swap ? KC_LALT : KC_LGUI,
-             alt_key  = win_swap ? KC_LGUI : KC_LALT,
-             ralt_key = win_swap ? KC_LGUI : KC_LALT;
+		uint16_t key        = keycode,
+						 lgui_key   = win_swap ? KC_LALT : KC_LGUI,
+             alt_key    = win_swap ? KC_LGUI : KC_LALT,
+             ralt_key   = win_swap ? KC_RCTRL : KC_RALT;
 
     switch (keycode)
     {
-		/* Layer 2 with Gui + Ctrl */
-		case KC_LGUI:
-				key = gui_key;
-				if (record->event.pressed)
-				{
-						if (ctrl_down && !fn_down)
-						{
-								unregister_code(KC_LCTRL);
-								layer_on(2);
-						}
-						else
-						{
-								register_code(key);
-						}
-						gui_down = true;
-				}
-				else
-				{
-						/* Alt x Gui Swap */
+    case KC_SPC:
+        if (record->event.pressed)
+        {
+            if (ctrl_down && !fn_down)
+            {
+                unregister_code(KC_LCTRL);
+                layer_on(2);
+            }
+            else
+            {
+                register_code(key);
+            }
+						spc_down = true;
+        }
+        else
+        {
 						unregister_code(key);
             layer_off(2);
-						gui_down = false;
-						if (ctrl_down)
-						{
-								register_code(KC_LCTRL);
-						}
+						spc_down = false;
+            if (ctrl_down)
+            {
+                register_code(KC_LCTRL);
+            }
 
-						if (fn_down)
-						{
-								layer_on(1);
-						}
-				}
+            if (fn_down)
+            {
+                layer_on(1);
+            }
+
+        }
 
         return false;
         break;
     case KC_LCTRL:
         if (record->event.pressed)
         {
-            if (gui_down && !fn_down)
+            if (spc_down && !fn_down)
             {
-								unregister_code(gui_key);
+								unregister_code(KC_SPC);
                 layer_on(2);
             }
             else
@@ -141,9 +138,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             unregister_code(key);
             ctrl_down = false;
 
-						if (gui_down)
+						if (spc_down)
 						{
-							register_code(gui_key);
+							unregister_code(KC_SPC);
 						}
 						if (fn_down)
 						{
@@ -153,7 +150,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
         return false;
         break;
-		/* End Layer 2 with Gui + Ctrl */
+		/* Layer 2 with Gui + Ctrl */
+		case KC_LGUI:
+				key = lgui_key;
+				if (record->event.pressed)
+				{
+						/* if (ctrl_down && !fn_down) */
+						/* { */
+								/* unregister_code(KC_LCTRL); */
+								/* layer_on(2); */
+						/* } */
+						/* else */
+						/* { */
+            register_code(key);
+						/* } */
+						gui_down = true;
+				}
+				else
+				{
+						/* Alt x Gui Swap */
+						unregister_code(key);
+            /* layer_off(2); */
+						gui_down = false;
+						/* if (ctrl_down) */
+						/* { */
+								/* register_code(KC_LCTRL); */
+						/* } */
+
+						/* if (fn_down) */
+						/* { */
+								/* layer_on(1); */
+						/* } */
+				}
+
+        return false;
+        break;
     case KC_LALT:
 				/* Alt x Gui Swap */
 				key = alt_key;
@@ -168,6 +199,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
         return false;
         break;
+		/* End Layer 2 with Gui + Ctrl */
 		case KC_RALT:
 				key = ralt_key;
 				if (record->event.pressed)
@@ -185,9 +217,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 				if (record->event.pressed)
 				{
 						fn_down = true;
-						if (gui_down && ctrl_down)
+						if (spc_down && ctrl_down)
 						{
-								register_code(gui_key);
+								register_code(KC_SPC);
 								register_code(KC_LCTRL);
 								layer_on(0);
 						}
@@ -199,9 +231,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 				else
 				{
 					fn_down = false;
-					if (gui_down && ctrl_down)
+					if (spc_down && ctrl_down)
 					{
-							unregister_code(gui_key);
+							unregister_code(KC_SPC);
 							unregister_code(KC_LCTRL);
 							layer_on(2);
 					}
@@ -217,19 +249,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         if (record->event.pressed)
         {
             register_code16(A(KC_BSPC));
-            /* register_code(ralt_key); */
-            /* register_code(KC_BSPC); */
         }
         else
         {
             unregister_code16(A(KC_BSPC));
-            /* unregister_code(ralt_key); */
-            /* unregister_code(KC_BSPC); */
         }
 
         return false;
         break;
-		case WIN_SWP:
+		case KC_INS:
 				if (record->event.pressed)
 				{
 						win_swap = !win_swap;
