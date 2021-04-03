@@ -1,5 +1,7 @@
+/*  -*-  eval: (turn-on-orgtbl); -*-
+ * default HHKB Layout
+ */
 #include QMK_KEYBOARD_H
-
 
 #define HHKB_FN MO(1)
 
@@ -13,7 +15,6 @@ enum custom_keycodes {
   WIN_SWP,
   S_GP
 };
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/* Layer 0: Fn0 Default Layer
