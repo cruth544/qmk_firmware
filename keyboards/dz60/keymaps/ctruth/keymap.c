@@ -7,7 +7,7 @@
 #define GAME 3
 #define PLYR 4
 #define MOUS 5
-#define NONE 32
+#define NONE 7
 
 
 /* FN KEYS */
@@ -26,6 +26,10 @@ const char* tp =
 #include "tp.glsl"
 };
 
+enum remap_keycodes {
+	KC_GESC = QK_GESC
+};
+
 enum custom_keycodes {
   WIN_SWP = SAFE_RANGE,
   DEL_W,
@@ -35,7 +39,7 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT(
-        KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,
+        QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSLS, KC_GRV,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSPC,
         KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
         LSFT_FN, KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, HHKB_FN,
@@ -109,7 +113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 		uint16_t key        = keycode,
 						 lgui_key   = win_swap ? KC_LALT : KC_LGUI,
              lalt_key   = win_swap ? KC_LGUI : KC_LALT,
-             ralt_key   = win_swap ? KC_RCTRL : KC_RALT;
+             ralt_key   = win_swap ? KC_RCTL : KC_RALT;
 
     switch (keycode)
     {
@@ -118,7 +122,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         {
             if (ctrl_down && !fn_down)
             {
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
                 layer_on(VIM);
             }
             else
@@ -134,7 +138,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						spc_down = false;
             if (ctrl_down)
             {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
             }
 
             if (fn_down)
@@ -152,7 +156,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						vfn_down = true;
             if (ctrl_down && !fn_down)
             {
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
                 layer_on(VIM);
             }
         }
@@ -162,7 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						vfn_down = false;
             if (ctrl_down)
             {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
             }
 
             if (fn_down)
@@ -173,7 +177,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         }
 
         break;
-    case KC_LCTRL:
+    case KC_LCTL:
         if (record->event.pressed)
         {
             /* Look into making this a bit less redundant */
@@ -239,7 +243,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						lgui_down = true;
             if (ctrl_down && !fn_down)
             {
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
                 layer_on(GAME);
             }
             else
@@ -255,7 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						lgui_down = false;
             if (ctrl_down)
             {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
             }
 
             if (fn_down)
@@ -298,7 +302,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 				if (record->event.pressed)
 				{
             register_code(key);
-						lsft_down = true;
+						if (!lsfn_down) {
+							lsft_down = true;
+						}
 				}
 				else
 				{
@@ -377,7 +383,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
         break;
     case KC_GRV:
-    case KC_GESC:
+    case QK_GESC:
         if (record->event.pressed)
         {
           if (lsfn_down)
@@ -408,7 +414,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 						if (spc_down && ctrl_down)
 						{
 								register_code(KC_SPC);
-								register_code(KC_LCTRL);
+								register_code(KC_LCTL);
 								layer_on(BASE);
 						}
 						else
@@ -422,7 +428,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 					if (spc_down && ctrl_down)
 					{
 							unregister_code(KC_SPC);
-							unregister_code(KC_LCTRL);
+							unregister_code(KC_LCTL);
 							layer_on(VIM);
 					}
 					else
