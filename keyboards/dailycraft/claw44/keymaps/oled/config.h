@@ -19,8 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define OLED_FONT_H "keyboards/claw44/lib/glcdfont.c"
 =======
 #define MASTER_LEFT
 #define OLED_FONT_H "claw44/lib/glcdfont.c"
 >>>>>>> f2c789bb4a (Fix build failures noticed in #24163 CI log. (#24164))
+=======
+#define OLED_FONT_H "claw44/lib/glcdfont.c"
+>>>>>>> cced3ee622 (Fix incorrect conflict resolution)
