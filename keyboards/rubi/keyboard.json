@@ -22,8 +22,13 @@
             "resync": true
         }
     },
+<<<<<<< HEAD
    "indicators": {
       "caps_lock": "C6"
+=======
+   "build": {
+      "lto": true
+>>>>>>> 4e2effc538 (`rubi`: reduce firmware size (#24170))
    },
    "matrix_pins": {
       "cols": ["B3", "B2", "B1", "F7"],
