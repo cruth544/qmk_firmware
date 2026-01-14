@@ -1,17 +1,13 @@
+/*  -*-  eval: (turn-on-orgtbl); -*-
+ * default HHKB Layout
+ */
 #include QMK_KEYBOARD_H
-
 
 #define HHKB_FN MO(1)
 
 const char* a =
 {
 #include "gp.glsl"
-};
-
-enum custom_keycodes {
-  DEL_W = SAFE_RANGE,
-  WIN_SWP,
-  S_GP
 };
 
 enum custom_keycodes {
@@ -125,7 +121,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
-const bool EXTRA_FN_OFF = true;
 static bool lgui_down = false;
 static bool rgui_down = false;
 static bool lalt_down = false;
@@ -147,7 +142,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     switch (keycode)
     {
     case KC_SPC:
-        if (EXTRA_FN_OFF) break;
         if (record->event.pressed)
         {
             if (ctrl_down && !fn_down)
@@ -181,7 +175,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         return false;
         break;
     case KC_LCTRL:
-        if (EXTRA_FN_OFF) break;
         if (record->event.pressed)
         {
             /* Look into making this a bit less redundant */
@@ -236,7 +229,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         break;
 		/* Layer 3 with Gui + Ctrl */
 		case KC_LGUI:
-        if (EXTRA_FN_OFF) break;
 				key = lgui_key;
 				if (record->event.pressed)
 				{
@@ -271,7 +263,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         return false;
         break;
 		case KC_RGUI:
-        if (EXTRA_FN_OFF) break;
 				if (record->event.pressed)
 				{
             register_code(key);
@@ -285,7 +276,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
         break;
 		case KC_LSFT:
-        if (EXTRA_FN_OFF) break;
 				if (record->event.pressed)
 				{
             register_code(key);
@@ -299,7 +289,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
         break;
 		case KC_RSFT:
-        if (EXTRA_FN_OFF) break;
 				if (record->event.pressed)
 				{
             register_code(key);
@@ -314,7 +303,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         break;
     case KC_LALT:
 				/* Alt x Gui Swap */
-        if (EXTRA_FN_OFF) break;
 				key = lalt_key;
         if (record->event.pressed)
         {
@@ -330,7 +318,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         break;
 		/* End Layer 2 with Gui + Ctrl */
 		case KC_RALT:
-        if (EXTRA_FN_OFF) break;
 				key = ralt_key;
 				if (record->event.pressed)
 				{
@@ -377,7 +364,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         return false;
 				break;
     case DEL_W:
-        if (EXTRA_FN_OFF) break;
         if (record->event.pressed)
         {
             register_code16(A(KC_BSPC));
@@ -390,7 +376,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         return false;
         break;
 		case WIN_SWP:
-        if (EXTRA_FN_OFF) break;
 				if (record->event.pressed)
 				{
 						win_swap = !win_swap;
@@ -399,14 +384,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 				return false;
 				break;
     case S_GP:
-        if (EXTRA_FN_OFF) break;
-        if (record->event.pressed)
-        {
-          send_string(a);
-        }
-
-        return false;
-        break;
       if (record->event.pressed)
       {
         send_string(a);

@@ -5,6 +5,9 @@
 .DS_Store
 ._*
 
+# Private files
+/keyboards/**/*.glsl
+
 # Merge files
 *.orig
 *.rej
